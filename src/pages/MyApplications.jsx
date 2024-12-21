@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
+import useAxios from "../hooks/useAxios";
 
 const MyApplications = () => {
   const { user } = useAuth();
   const [jobs, setJobs] = useState([]);
+  const axiosSecure = useAxios();
   useEffect(() => {
-    fetch(`http://localhost:5000/job-application?email=${user.email}`)
-      .then((res) => res.json())
-      .then((data) => setJobs(data));
+    // axios
+    //   .get(`http://localhost:5000/job-application?email=${user.email}`, {withCredentials: true})
+    //   .then((res) => {
+    //     setJobs(res.data);
+    //   });
+    axiosSecure.get(`/job-application?email=${user.email}`)
+    .then(res=> setJobs(res.data))
+
   }, [user.email]);
   return (
     <div className="my-8 w-10/12 mx-auto">
@@ -28,15 +35,15 @@ const MyApplications = () => {
               </tr>
             </thead>
             <tbody>
-              {jobs.map((job, index) => 
+              {jobs.map((job, index) => (
                 <tr key={job._id} className="hover">
-                  <th>{index+1}</th>
+                  <th>{index + 1}</th>
                   <td>{job.title}</td>
                   <td>{job.company}</td>
                   <td>{job.jobType}</td>
                   <td>{job.applicationDeadline}</td>
                 </tr>
-              )}
+              ))}
             </tbody>
           </table>
         </div>

@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
 import loginLottie from "../assets/lottie/login.json";
 import { AuthContext } from "../providers/AuthProvider";
+import axios from "axios";
 
 const Login = () => {
   const { signInUser, googleSignIn } = useContext(AuthContext);
@@ -16,13 +17,10 @@ const Login = () => {
     const password = form.password.value;
     signInUser(email, password)
       .then((result) => {
-        console.log(result.user);
+        //console.log(result.user);
         //navigate after login
         navigate(location?.state ? location.state : "/");
-        //update last login time
-        const lastSignInTime = result?.user?.metadata?.lastSignInTime;
-        const loginInfo = { email, lastSignInTime };
-        form.reset();
+        //!form.reset();
       })
       .catch((error) => {
         console.log(error.message, "Wrong Credentials!");

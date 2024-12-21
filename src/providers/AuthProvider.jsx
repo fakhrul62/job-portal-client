@@ -9,6 +9,7 @@ import {
   signOut,
 } from "firebase/auth";
 import auth from "../services/firebase.config";
+import axios from "axios";
 
 export const AuthContext = createContext(null);
 const googleProvider = new GoogleAuthProvider();
@@ -39,6 +40,22 @@ const AuthProvider = ({ children }) => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       console.log("Observing Current user: ", currentUser);
+      const user = { email: currentUser?.email };
+      if (currentUser?.email) {
+        axios
+          .post("http://localhost:5000/jwt", user, { withCredentials: true })
+          .then((res) => {
+            console.log("login token", res.data);
+            setLoading(false);
+          });
+      } else {
+        axios
+          .post("http://localhost:5000/jwt/logout", {}, { withCredentials: true })
+          .then((res) => {
+            console.log("logout", res.data);
+            setLoading(false);
+          });
+      }
       setLoading(false);
     });
     return () => {
@@ -46,24 +63,6 @@ const AuthProvider = ({ children }) => {
     };
   }, []);
 
-  /**
-   * useEffect(() => {
-  const unSubscribe = onAuthStateChanged(auth, async (currentUser) => {
-    if (currentUser) {
-      // Optionally fetch additional details if necessary
-      await currentUser.reload(); // Ensure the latest user info is fetched
-      setUser({ ...currentUser });
-      console.log("Observing Current user: ", currentUser);
-    }
-    setLoading(false);
-  });
-
-  return () => {
-    unSubscribe();
-  };
-}, []);
-
-   */
   const userInfo = {
     user,
     loading,

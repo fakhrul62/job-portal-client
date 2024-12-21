@@ -8,7 +8,7 @@ const LatestJobs = () => {
     return (
         <div className='w-10/12 mx-auto'>
             <h2 className='text-center font-bold text-3xl my-5'>All Latest Jobs</h2>
-            <div className='grid md:grid-cols-3 gap-7'>
+            <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-7'>
                 {
                     jobs.map(job=><LatestJobCard key={job._id} job={job}></LatestJobCard>)
                 }

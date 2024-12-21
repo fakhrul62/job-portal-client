@@ -33,7 +33,7 @@ const LatestJobCard = ({ job }) => {
           </p>
         </div>
       </div>
-      <h2 className="text-blue-700 font-semibold text-lg mt-4">{title}</h2>
+      <Link to={`/jobs/${_id}`}><h2 className="text-blue-700 font-semibold text-lg mt-4">{title}</h2></Link>
       <div className="flex items-center gap-4 text-sm text-zinc-500 my-2">
         <p className="flex items-center gap-1">
           <IoBriefcaseOutline />
@@ -46,8 +46,8 @@ const LatestJobCard = ({ job }) => {
       </div>
       <p className="text-zinc-700 grow">{description}</p>
       <div className="flex gap-2 flex-wrap mt-3">
-        {requirements.map((req) => (
-          <button className="bg-zinc-800 text-xs text-white px-4 py-2 rounded-lg">
+        {requirements.map((req, idx) => (
+          <button key={idx} className="bg-zinc-800 text-xs text-white px-4 py-2 rounded-lg">
             {req}
           </button>
         ))}

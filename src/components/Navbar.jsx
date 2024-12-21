@@ -15,9 +15,7 @@ const Navbar = () => {
   );
   const handleLogOut = () => {
     logOut()
-      .then(() => {
-        console.log("user logged out");
-      })
+      .then()
       .catch((error) => {
         const errorCode = error.message;
         console.log(errorCode);
@@ -27,7 +25,7 @@ const Navbar = () => {
     <div className="shadow-xl">
       <div className="navbar w-10/12 mx-auto">
         <div className="navbar-start">
-          <div className="dropdown">
+          <div className="dropdown ">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -46,12 +44,12 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 shadow bg-zinc-100 p-5 border border-zinc-300 gap-5 hover:*:bg-blue-500 *:rounded-lg *:p-3 hover:*:text-white"
             >
               {li}
             </ul>
           </div>
-          <a className="text-xl">Job Portal</a>
+          <Link to="/" className="text-xl">Job Portal</Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 gap-8">{li}</ul>
@@ -68,7 +66,7 @@ const Navbar = () => {
               <Link>
                 <button
                   onClick={handleLogOut}
-                  className="bg-transparent border-2 border-fireb px-5 py-2 text-fireb font-body font-semibold rounded"
+                  className="bg-transparent border-2 border-red-500 px-5 py-2 text-red-500 font-body font-semibold rounded"
                   type="button"
                 >
                   Logout
@@ -81,7 +79,7 @@ const Navbar = () => {
               </div>
               <Link to="/login">
                 <button
-                  className="bg-transparent border-2 border-mongo px-5 py-2 text-mongo font-body font-semibold rounded"
+                  className="bg-transparent border-2 border-green-600 px-5 py-2 text-green-600 font-body font-semibold rounded"
                   type="button"
                 >
                   Login
