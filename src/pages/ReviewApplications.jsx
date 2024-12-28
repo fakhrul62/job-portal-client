@@ -1,23 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const ReviewApplications = () => {
   const applications = useLoaderData();
-  const handleStatusUpdate = (e, id)  =>{
+
+  const handleStatusUpdate = (e, id) => {
     console.log(id, e.target.value);
-    const data ={
-        status: e.target.value
-    }
-    fetch( `http://localhost:5000/job-applications/${id}`, {
-        method: "PATCH",
-        headers: {
-            "content-type" : "application/json"
-        },
-        body: JSON.stringify(data)
+    const data = {
+      status: e.target.value,
+    };
+    fetch(`http://localhost:5000/job-applications/${id}`, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
     })
-    .then(res=> res.json())
-    .then(data=> console.log(data))
-  }
+      .then((res) => res.json())
+      .then((data) => {
+        if(data.modifiedCount){
+          Swal.fire({
+          title: "Status Changed!",
+          // text: "You clicked the button!",
+          icon: "success",
+          iconColor: "#3575dd",
+          confirmButtonText: "Okay",
+          customClass: {
+            confirmButton: "bg-blue-500 text-white font-body px-32",
+            title: "font-head font-bold text-2xls",
+          },
+        });
+        }
+        
+      });
+  };
   return (
     <div className="my-8 w-10/12 mx-auto">
       <h2 className="text-center font-bold text-3xl mb-5">
@@ -44,7 +61,11 @@ const ReviewApplications = () => {
                   <td>{app.applicant_email}</td>
                   <td>{app.status}</td>
                   <td>
-                    <select onChange={(e)=>handleStatusUpdate(e,app._id)} name="status" className="select select-bordered w-full max-w-xs">
+                    <select
+                      onChange={(e) => handleStatusUpdate(e, app._id)}
+                      name="status"
+                      className="select select-bordered w-full max-w-xs"
+                    >
                       <option disabled selected>
                         Change Status
                       </option>

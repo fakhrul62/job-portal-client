@@ -1,16 +1,22 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
+import logo from "../assets/logo.png";
+import "./Navbar.css";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const li = (
     <>
-      <Link to="/">Home</Link>
-      <Link to="/latest-jobs">Latest Jobs</Link>
-      <Link to="/my-applications">My Applications</Link>
-      <Link to="/add-job">Add Job</Link>
-      <Link to="/my-jobs">My Jobs</Link>
+      <NavLink to="/">Home</NavLink>
+      <NavLink to="/latest-jobs">Latest Jobs</NavLink>
+      {user && (
+        <>
+          <NavLink to="/my-applications">My Applications</NavLink>
+          <NavLink to="/add-job">Add Job</NavLink>
+          <NavLink to="/my-jobs">My Jobs</NavLink>
+        </>
+      )}
     </>
   );
   const handleLogOut = () => {
@@ -49,20 +55,23 @@ const Navbar = () => {
               {li}
             </ul>
           </div>
-          <Link to="/" className="text-xl">Job Portal</Link>
+          <Link to="/" className="text-xl flex items-center gap-2 font-bold">
+            <span>
+              <img src={logo} className="h-10" />
+            </span>{" "}
+            Job Portal
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 gap-8">{li}</ul>
         </div>
         <div className="navbar-end gap-4">
-        {user ? (
+          {user ? (
             <div className="flex gap-3 items-center">
               <div
                 className="tooltip tooltip-bottom"
                 data-tip={user.displayName}
-              >
-                
-              </div>
+              ></div>
               <Link>
                 <button
                   onClick={handleLogOut}
@@ -75,8 +84,7 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="flex gap-3 items-center">
-              <div className="tooltip tooltip-bottom">
-              </div>
+              <div className="tooltip tooltip-bottom"></div>
               <Link to="/login">
                 <button
                   className="bg-transparent border-2 border-green-600 px-5 py-2 text-green-600 font-body font-semibold rounded"

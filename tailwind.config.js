@@ -8,7 +8,12 @@ export default {
     themes: ["light"],
   },
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'head': ['Outfit, serif'],
+        'body': ['Abel, serif'],
+      },
+    },
   },
   plugins: [require('daisyui')],
 }

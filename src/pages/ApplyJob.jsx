@@ -1,38 +1,60 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const ApplyJob = () => {
-    const {id} = useParams();
-    const {user} = useAuth();
-    const navigate = useNavigate();
-    const handleJobSubmit = (e) => {
-        e.preventDefault();
-        const form = e.target;
-        const name = form.name.value;
-        const email = form.email.value;
-        const linkedin = form.linkedin.value;
-        const github = form.github.value;
-        const resumeUrl = form.resumeUrl.value;
-        const application = {job_id: id, applicant:name, applicant_email:email, linkedin, github, resumeUrl};
-        fetch('http://localhost:5000/job-applications', {
-            method: "POST",
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(application)
-        })
-        .then(res=> res.json())
-        .then(data=>{
-            console.log(data);
-            navigate("/my-applications")
-        })
-        form.reset();
-      };
+  const { id } = useParams();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const handleJobSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const linkedin = form.linkedin.value;
+    const github = form.github.value;
+    const resumeUrl = form.resumeUrl.value;
+    const application = {
+      job_id: id,
+      applicant: name,
+      applicant_email: email,
+      linkedin,
+      github,
+      resumeUrl,
+    };
+    fetch("http://localhost:5000/job-applications", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(application),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        Swal.fire({
+          title: "Job Applied!",
+          // text: "You clicked the button!",
+          icon: "success",
+          iconColor: "#3575dd",
+          confirmButtonText: 'Okay',
+          customClass: {
+            confirmButton: "bg-blue-500 text-white font-body px-32",
+            title: "font-head font-bold text-2xls",
+          },
+        });
+        console.log(data);
+        navigate("/my-applications");
+      });
+    form.reset();
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 w-10/12 mx-auto my-8">
-      <form className="w-full max-w-5xl bg-white p-8 shadow-lg rounded-lg" onSubmit={handleJobSubmit}>
+      <form
+        className="w-full max-w-5xl bg-white p-8 shadow-lg rounded-lg"
+        onSubmit={handleJobSubmit}
+      >
         <h2 className="text-2xl font-bold mb-6 text-gray-800">
           Job Application
         </h2>
@@ -49,7 +71,7 @@ const ApplyJob = () => {
               type="text"
               id="name"
               name="name"
-              defaultValue={user.displayName ? user.displayName:"John Doe"}
+              defaultValue={user.displayName ? user.displayName : "John Doe"}
               required
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Your Name"

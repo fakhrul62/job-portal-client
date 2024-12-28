@@ -1,8 +1,9 @@
 import React from "react";
 import useAuth from "../hooks/useAuth";
+import Swal from 'sweetalert2';
 
 const AddJob = () => {
-    const {user} = useAuth();
+  const { user } = useAuth();
   const handleJobSubmit = (e) => {
     e.preventDefault();
 
@@ -21,7 +22,22 @@ const AddJob = () => {
       body: JSON.stringify(newJob),
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        console.log(data);
+        if (data.insertedId) {
+          Swal.fire({
+                    title: "Job Added!",
+                    // text: "You clicked the button!",
+                    icon: "success",
+                    iconColor: "#3575dd",
+                    confirmButtonText: 'Okay',
+                    customClass: {
+                      confirmButton: "bg-blue-500 text-white font-body px-32",
+                      title: "font-head font-bold text-2xls",
+                    },
+                  });
+        }
+      });
 
     //const form = e.target;
     // const job = {
@@ -68,6 +84,7 @@ const AddJob = () => {
                 required
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Job Title"
+                required
               />
             </div>
             {/* location */}
@@ -85,6 +102,7 @@ const AddJob = () => {
                 required
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Location"
+                required
               />
             </div>
             {/* job type */}
@@ -97,6 +115,7 @@ const AddJob = () => {
               </label>
               <select
                 name="jobType"
+                required
                 className="select select-bordered w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option disabled selected>
@@ -117,6 +136,7 @@ const AddJob = () => {
               </label>
               <select
                 name="category"
+                required
                 className="select select-bordered w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option disabled selected>
@@ -145,6 +165,7 @@ const AddJob = () => {
                 name="applicationDeadline"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Application Deadline"
+                required
               />
             </div>
             {/* Salary */}
@@ -162,6 +183,7 @@ const AddJob = () => {
                   name="min"
                   className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Min"
+                  required
                 />
                 <input
                   type="number"
@@ -169,6 +191,7 @@ const AddJob = () => {
                   name="max"
                   className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Max"
+                  required
                 />
                 <select
                   name="currency"
@@ -198,6 +221,7 @@ const AddJob = () => {
                 placeholder="Description"
                 id=""
                 rows="5"
+                required
               ></textarea>
             </div>
             {/* company */}
@@ -214,6 +238,7 @@ const AddJob = () => {
                 name="company"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Company"
+                required
               />
             </div>
             {/* requirements */}
@@ -230,6 +255,7 @@ const AddJob = () => {
                 name="requirements"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Requirements (separate with comma)"
+                required
               />
             </div>
             {/* responsibilities */}
@@ -246,6 +272,7 @@ const AddJob = () => {
                 name="responsibilities"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Responsibilities (separate with comma)"
+                required
               />
             </div>
             {/* status */}
@@ -258,6 +285,7 @@ const AddJob = () => {
               </label>
               <select
                 name="status"
+                required
                 className="select select-bordered w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option disabled selected>
@@ -277,11 +305,13 @@ const AddJob = () => {
               </label>
               <input
                 type="text"
+                readOnly
                 defaultValue={user.email}
                 id="resumeUrl"
                 name="hr_email"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="HR Email"
+                required
               />
             </div>
             {/* hr name */}
@@ -298,6 +328,7 @@ const AddJob = () => {
                 name="hr_name"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="HR Name"
+                required
               />
             </div>
             {/* logo */}
@@ -314,6 +345,7 @@ const AddJob = () => {
                 name="company_logo"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Company Logo"
+                required
               />
             </div>
           </div>

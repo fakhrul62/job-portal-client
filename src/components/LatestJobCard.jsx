@@ -57,7 +57,7 @@ const LatestJobCard = ({ job }) => {
       </div>
       <div className="mt-3">
         <Link to={`/jobs/${_id}`}>
-        <button type="button" className="hover:bg-zinc-800 hover:text-white duration-200 text-black border border-black w-full py-3 rounded-lg">Apply Now</button></Link>
+        <button type="button" className="hover:bg-zinc-800 hover:text-white duration-200 text-black border border-black w-full py-3 rounded-lg active:scale-90">Apply Now</button></Link>
       </div>
     </div>
   );
